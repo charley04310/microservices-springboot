@@ -2,18 +2,6 @@
 
 **_last update:_** 2023-11-07
 
-- [Microservices Architecture](#microservices-architecture)
-  - [Schema](#schema)
-    - [Schema explanation](#schema-explanation)
-  - [Introduction](#introduction)
-    - [Communication Protocol](#communication-protocol)
-    - [Authentication and security](#authentication-and-security)
-    - [IP resolvment and load balancing](#ip-resolvment-and-load-balancing)
-    - [Database per Service](#database-per-service)
-    - [Resilience Considerations:](#resilience-considerations-)
-  - [Start keycloak](#start-keycloak)
-  - [Start spring boot services](#start-spring-boot-services)
-
 ## Schema
 
 <img alt="logo" src="./assets/shema_microservices.jpg"  />
@@ -64,22 +52,6 @@ The "Database per Service" model is employed, meaning that each service is respo
 > **_NOTE_**
 > The "Database per Service" approach, while providing data isolation and scalability, can also lead to the challenge of maintaining multiple databases. This can result in increased administrative overhead, especially when it comes to backup, monitoring, and data synchronization across services. It's essential to carefully manage and maintain multiple databases to ensure data consistency and performance.
 
-### Resilience Considerations:
+## Resilience Considerations:
 
 In our current architecture, we have implemented Docker Compose to manage our microservices. While the services are configured to restart always in case of failures, it's essential to address a potential resilience issue. Events that are received during system failures are not currently persistently recorded within the system. This means that any incoming events during such incidents might be lost forever. To enhance the system's resilience and ensure that no critical data is lost, we may need to implement mechanisms like event logging and message queuing systems that can capture and retain incoming events, even in the face of unexpected failures. This will allow us to recover and process any missed events, ensuring data integrity and a more resilient architecture.
-
-## Start keycloak
-
-From the root directory, run the following command:
-
-```bash
-docker-compose up -d
-```
-
-## Start spring boot services
-
-For eache service, run the following command:
-
-```bash
-./gradlew bootRun
-```
